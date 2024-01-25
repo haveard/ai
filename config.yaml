@@ -1,19 +1,19 @@
-task:
-  _target_: pyannote.audio.tasks.SpeakerDiarization
-  duration: 10.0
-  max_speakers_per_chunk: 3
-  max_speakers_per_frame: 2
-model:
-  _target_: pyannote.audio.models.segmentation.PyanNet
-  sample_rate: 16000
-  num_channels: 1
-  sincnet:
-    stride: 10
-  lstm:
-    hidden_size: 128
-    num_layers: 4
-    bidirectional: true
-    monolithic: true
-  linear:
-    hidden_size: 128
-    num_layers: 2
+version: 3.0.0
+
+pipeline:
+  name: pyannote.audio.pipelines.SpeakerDiarization
+  params:
+    clustering: AgglomerativeClustering
+    embedding: hbredin/wespeaker-voxceleb-resnet34-LM
+    embedding_batch_size: 1
+    embedding_exclude_overlap: true
+    segmentation: pyannote/segmentation-3.0
+    segmentation_batch_size: 32
+
+params:
+  clustering:
+    method: centroid
+    min_cluster_size: 12
+    threshold: 0.7045654963945799
+  segmentation:
+    min_duration_off: 0.0
